@@ -1,0 +1,126 @@
+# ----------------------------------------------------------------------
+# Build Tools & Outputs
+# ----------------------------------------------------------------------
+# Maven
+target/
+.mvn/
+mvnw
+mvnw.cmd
+.mvn/wrapper/
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Ant
+bin/
+dist/
+out/
+*.war
+*.ear
+
+# ----------------------------------------------------------------------
+# IDE Specific Files
+# ----------------------------------------------------------------------
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+*.ids
+*.orig
+
+# Eclipse
+.classpath
+.project
+.settings/
+.metadata/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+
+# VS Code
+.vscode/
+
+# NetBeans
+nbproject/private/
+nbproject/
+nbbuild/
+dist/
+
+# ----------------------------------------------------------------------
+# Dependency Management
+# ----------------------------------------------------------------------
+# JAR/WAR/EAR files (除项目构建产物外)
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.class
+
+# 本地依赖库（如本地 Maven 仓库）
+lib/
+libs/
+
+# ----------------------------------------------------------------------
+# System & Temp Files
+# ----------------------------------------------------------------------
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# 临时文件
+*.log
+*.bak
+*.swp
+*.swo
+*.swn
+*.dump
+.history
+
+# ----------------------------------------------------------------------
+# Environment & Secrets
+# ----------------------------------------------------------------------
+# 环境配置文件（如本地开发配置）
+.env
+.env.local
+*.properties
+
+# 密钥文件
+*.key
+*.pem
+*.cert
+*.jks
+*.keystore
+*.truststore
+
+# ----------------------------------------------------------------------
+# Test & Coverage Reports
+# ----------------------------------------------------------------------
+/reports/
+/test-output/
+/coverage/
+*.log
+*.lcov
+
+# ----------------------------------------------------------------------
+# Logs
+# ----------------------------------------------------------------------
+logs/
+*.log
+*.log.*

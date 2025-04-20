@@ -1,0 +1,169 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.speroseed</groupId>
+  <artifactId>spero-seed-dependencies</artifactId>
+  <version>1.0.1</version>
+  <name>spero-seed-dependencies</name>
+
+  <packaging>pom</packaging>
+  <properties>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+<!--    <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>-->
+    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+    <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+
+    <spring-boot.version>2.6.13</spring-boot.version>
+    <spring-boot.mybatis-plus>3.4.0</spring-boot.mybatis-plus>
+    <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
+    <druid.version>1.2.6</druid.version>
+    <dynamic-ds.version>3.4.1</dynamic-ds.version>
+    <fastjson.version>2.0.57</fastjson.version>
+    <easyexcel.version>3.3.2</easyexcel.version>
+    <hutool.version>5.8.5</hutool.version>
+    <knife4j.version>4.5.0</knife4j.version>
+    <redisson.version>3.6.5</redisson.version>
+    <mybatis-plus-generator>3.5.3</mybatis-plus-generator>
+    <jackson.version>2.13.4</jackson.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!--spring-boot-->
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!--alibaba druid-->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>${druid.version}</version>
+      </dependency>
+      <!--mybatis-plus-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${spring-boot.mybatis-plus}</version>
+      </dependency>
+      <!--dynamic-datasource-->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+        <version>${dynamic-ds.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-generator</artifactId>
+        <version>${mybatis-plus-generator}</version>
+      </dependency>
+      <!--pagehelper-->
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.boot.version}</version>
+      </dependency>
+      <!--easyexcel-->
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>easyexcel</artifactId>
+        <version>${easyexcel.version}</version>
+      </dependency>
+      <!--fastjson-->
+      <!--            <dependency>-->
+      <!--                <groupId>com.alibaba</groupId>-->
+      <!--                <artifactId>fastjson</artifactId>-->
+      <!--                <version>${fastjson.version}</version>-->
+      <!--            </dependency>-->
+      <dependency>
+        <groupId>com.alibaba.fastjson2</groupId>
+        <artifactId>fastjson2</artifactId>
+        <version>${fastjson.version}</version>
+      </dependency>
+      <!--hutool-->
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>${hutool.version}</version>
+      </dependency>
+      <!--knife4j-->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-openapi3-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.redisson</groupId>
+        <artifactId>redisson</artifactId>
+        <version>${redisson.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>${jackson.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <version>${spring-boot.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>${flatten-maven-plugin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <!--私有仓库-->
+  <!--  拉取需要的配置  -->
+  <repositories>
+    <repository>
+      <id>m-spero</id>
+      <name>私服-</name>
+      <url>http://127.0.0.1:9901/repository/maven-spero-group/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <!--打包上传配置-->
+  <distributionManagement>
+    <repository>
+      <id>spero</id>
+      <url>http://127.0.0.1:9901/repository/maven-spero-repository/</url>
+    </repository>
+  </distributionManagement>
+</project>
