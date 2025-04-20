@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.speroseed</groupId>
   <artifactId>spero-seed-dependencies</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.0</version>
   <name>spero-seed-dependencies</name>
 
   <packaging>pom</packaging>
@@ -13,9 +13,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
-<!--    <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>-->
+    <maven-clean-plugin.version>3.3.2</maven-clean-plugin.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+    <maven-archetype-plugin.version>3.2.0</maven-archetype-plugin.version>
 
     <spring-boot.version>2.6.13</spring-boot.version>
     <spring-boot.mybatis-plus>3.4.0</spring-boot.mybatis-plus>
@@ -77,11 +78,6 @@
         <version>${easyexcel.version}</version>
       </dependency>
       <!--fastjson-->
-      <!--            <dependency>-->
-      <!--                <groupId>com.alibaba</groupId>-->
-      <!--                <artifactId>fastjson</artifactId>-->
-      <!--                <version>${fastjson.version}</version>-->
-      <!--            </dependency>-->
       <dependency>
         <groupId>com.alibaba.fastjson2</groupId>
         <artifactId>fastjson2</artifactId>
@@ -139,6 +135,18 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
           <version>${flatten-maven-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-archetype-plugin</artifactId>
+          <version>${maven-archetype-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-clean-plugin</artifactId>
+          <version>${maven-clean-plugin.version}</version>
         </plugin>
       </plugins>
     </pluginManagement>
