@@ -1,12 +1,11 @@
 package com.speroseed.web.handler;
 
-import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.StrUtil;
 import com.speroseed.http.HttpCachingRequestWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.util.ContentCachingRequestWrapper;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 import javax.servlet.ServletInputStream;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,10 +31,9 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         if (log.isInfoEnabled()) {
             String method = request.getMethod();
             String uri = request.getRequestURI();
-            Enumeration<String> headerNames = request.getHeaderNames();
-
+            String requestHeaders = getRequestHeaders(request);
             String params = getRequestParameters(request);
-            log.info("[请求] 请求方式: {}, 请求路径: {}, 请求参数: {}", method, uri, params);
+            log.info("[请求] 请求方式: {}, 请求路径: {}\n 请求头：{}\n 请求相关参数: {}", method, uri, requestHeaders, params);
         }
         return true;
     }
@@ -56,11 +55,20 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
         Enumeration<String> headerNames = request.getHeaderNames();
         headerBuilder.append("{\n");
         // 遍历并打印每个请求头
-        while (headerNames.hasMoreElements()) {
-            String headerName = headerNames.nextElement();
-            String headerValue = request.getHeader(headerName);
-            headerBuilder.append(StrUtil.format("{}:{}\n; ", headerName, headerValue));
-        }
+//        while (headerNames.hasMoreElements()) {
+//            String headerName = headerNames.nextElement();
+//            String headerValue = request.getHeader(headerName);
+//            headerBuilder.append(StrUtil.format("{}:{}\n; ", headerName, headerValue));
+//        }
+        // 将 Enumeration 转换为迭代流并遍历
+        Collections.list(headerNames).forEach(headerName -> {
+            // 获取某个头名称对应的所有值（如多个相同头）
+            Enumeration<String> headers = request.getHeaders(headerName);
+            Collections.list(headers).forEach(value -> {
+                headerBuilder.append(StrUtil.format("{}:{};\n ", headerName, value));
+            });
+        });
+
         headerBuilder.append("}");
         return headerBuilder.length() == 2 ? "无" : headerBuilder.toString();
     }
@@ -68,9 +76,22 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
     private String getRequestParameters(HttpServletRequest request) {
         StringBuilder paramsBuilder = new StringBuilder();
 
+        // 处理动态路由中的参数
+        // 获取路径变量
+        Map<String, String> pathVariables = (Map<String, String>) request
+                .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+
+        if (pathVariables != null) {
+            paramsBuilder.append("动态路径变量: ");
+            pathVariables.forEach((key, value) ->
+                    paramsBuilder.append(StrUtil.format("{}:{}; ", key, value))
+            );
+        }
+
         // 处理查询参数和表单参数
         Map<String, String[]> paramMap = request.getParameterMap();
         if (!paramMap.isEmpty()) {
+            paramsBuilder.append("请求携参: ");
             String queryParams = paramMap.entrySet().stream()
                     .map(entry -> entry.getKey() + "=" + String.join(",", entry.getValue()))
                     .collect(Collectors.joining("&"));
@@ -90,7 +111,7 @@ public class RequestLoggingInterceptor implements HandlerInterceptor {
             String body = IoUtil.read(wrappedRequestInputStream, StandardCharsets.UTF_8);
             if (StrUtil.isNotEmpty(body)) {
                 if (paramsBuilder.length() > 0) paramsBuilder.append("; ");
-                paramsBuilder.append("Body: ").append(body);
+                paramsBuilder.append("请求体: ").append(body);
             }
         }
 
