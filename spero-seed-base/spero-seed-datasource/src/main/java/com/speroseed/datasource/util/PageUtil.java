@@ -1,16 +1,19 @@
-package com.speroseed.core.util;
+package com.speroseed.datasource.util;
 
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.speroseed.core.model.page.OrderBy;
-import com.speroseed.core.model.page.PageDomain;
+import com.speroseed.datasource.model.page.OrderBy;
+import com.speroseed.datasource.model.page.PageDomain;
+import com.speroseed.datasource.model.page.TableDataInfo;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @description
@@ -40,6 +43,20 @@ public class PageUtil extends PageHelper {
      */
     public static void clearPage() {
         PageHelper.clearPage();
+    }
+
+    /**
+     * list转TableDataInfo
+     * @param list
+     * @return
+     */
+    public static <T> TableDataInfo<T> toTableDataInfo(List<T> list) {
+        if (list instanceof Page) {
+            Page<T> page = (Page<T>) list;
+            return new TableDataInfo<>(page.getTotal(), page.getResult());
+        } else {
+            throw new RuntimeException("当前list不支持转换为TableDataInfo对象");
+        }
     }
 
     private static String getOrderByColumn(Set<OrderBy> orderBy) {

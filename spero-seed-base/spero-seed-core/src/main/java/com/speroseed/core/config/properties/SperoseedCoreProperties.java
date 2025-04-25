@@ -10,10 +10,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @ConfigurationProperties(prefix = "speroseed")
-public class CoreProperties {
+public class SperoseedCoreProperties {
 
     /**
      * 任务线程池大小
      */
-    private Integer commonThreadPoolSize;
+    private Integer threadPoolSize;
 }

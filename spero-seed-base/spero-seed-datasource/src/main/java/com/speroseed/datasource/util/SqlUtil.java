@@ -1,4 +1,4 @@
-package com.speroseed.core.util;
+package com.speroseed.datasource.util;
 
 import cn.hutool.core.util.StrUtil;
 import org.springframework.util.StringUtils;

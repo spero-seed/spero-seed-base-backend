@@ -1,6 +1,6 @@
 package com.speroseed.core.config;
 
-import com.speroseed.core.config.properties.CoreProperties;
+import com.speroseed.core.config.properties.SperoseedCoreProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +21,11 @@ import java.util.Map;
 @Configuration
 @EnableAsync
 @Slf4j
-@EnableConfigurationProperties({CoreProperties.class})
+@EnableConfigurationProperties({SperoseedCoreProperties.class})
 public class ThreadPoolConfig {
 
     @Autowired
-    private CoreProperties coreProperties;
+    private SperoseedCoreProperties coreProperties;
 
     @Bean
     public TaskDecorator speroseedTaskDecorator() {
@@ -51,7 +51,7 @@ public class ThreadPoolConfig {
     @Bean("speroseedThreadPoolTaskExecutor")
     public ThreadPoolTaskExecutor speroseedThreadPoolTaskExecutor() {
 
-        Integer poolSize = coreProperties.getCommonThreadPoolSize();
+        Integer poolSize = coreProperties.getThreadPoolSize();
         if (poolSize == null) {
             int cpuCores = Runtime.getRuntime().availableProcessors();
             log.info("当前操作系统拥有的cpu逻辑核心数 : {}", cpuCores);
@@ -64,7 +64,6 @@ public class ThreadPoolConfig {
         executor.setCorePoolSize(poolSize);
         executor.setMaxPoolSize(poolSize);
         executor.setQueueCapacity(Integer.MAX_VALUE);
-//        executor.setKeepAliveSeconds(60);
         executor.setThreadNamePrefix("spThreadPoolTaskExecutor-");
         executor.initialize();
         return executor;

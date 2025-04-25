@@ -1,4 +1,4 @@
-package com.speroseed.core.model.page;
+package com.speroseed.datasource.model.page;
 
 import lombok.Data;
 

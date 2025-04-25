@@ -1,16 +1,16 @@
 package com.speroseed.doc.config.properties;
 
 import lombok.Data;
-import org.springdoc.core.Constants;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- *
+ * @description 权限认证
  * @author zfq
+ * @date 2025/4/23 11:01
  */
 @Data
 @ConfigurationProperties(prefix = "springdoc.auth")
-public class AuthFilter {
+public class AuthProperties {
 
     /**
      * 是否开启
